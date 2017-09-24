@@ -24,24 +24,28 @@ Emit one line to standard output, telling us either
 Leia escapes with the plans.  
 or  
 Darth blockades star-system name (blockage cost).  
-
-For example, seven star-systems and seven hyperspace jumps might be povide input
->   7
->   Scarif
->   Coruscant 8
->   Mandalore 1
->   Tatooine 3
->   Naboo 4
->   Yavin
->   Kamino 2
->   7
->   Scarif Coruscant
->   Scarif Mandalore
->   Coruscant Tatooine
->   Tatooine Mandalore
->   Naboo Tatooine
->   Tatooine Yavin
->   Yavin Kamino
-
-and would be expected to generate output
->   Darth blockades Tatooine (3).
+  
+For example, seven star-systems and seven hyperspace jumps might be povide input  
+>   7  
+>   Scarif  
+>   Coruscant 8  
+>   Mandalore 1  
+>   Tatooine 3  
+>   Naboo 4  
+>   Yavin  
+>   Kamino 2  
+>   7  
+>   Scarif Coruscant  
+>   Scarif Mandalore  
+>   Coruscant Tatooine  
+>   Tatooine Mandalore  
+>   Naboo Tatooine  
+>   Tatooine Yavin  
+>   Yavin Kamino  
+  
+and would be expected to generate output  
+>   Darth blockades Tatooine (3).  
+  
+We have a 'Makefile' and targets  
+* 'all' to build the binary (starwar)  
+* 'tests' to run all the tests (so far, 'test0', 'test1', 'test2')  
