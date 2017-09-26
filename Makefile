@@ -9,8 +9,7 @@ all:
 	${CC} -o $(BIN)
 
 # tests
-test:	test0.out test1.out test2.out
-
+test:	test0.out test1.out test2.out test3.out test4.out test5.out
 # construct a .out file from a .in file and check it
 %.out:	${BIN} %.in %.exp
 #		sed -e 's/[ 	]*#.*$$//' <$*.in  >$*.in~  2>/dev/tty   
