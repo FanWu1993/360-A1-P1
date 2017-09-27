@@ -1,8 +1,8 @@
 package main
 
 import (
+	//  "io/ioutil"
 	"fmt"
-	//	"io/ioutil"
 	"log"
 	"os"
 )
@@ -42,8 +42,12 @@ func degree(v Vertex) int {
 }
 
 type Graph []Vertex
+type Path []StarSystem
+
+var s map[string]int
 
 func readVertices() Graph {
+	s = make(map[string]int)
 	V := readInt("V")
 	if 0 == V {
 		fmt.Printf("No Star-system.\n")
@@ -56,6 +60,7 @@ func readVertices() Graph {
 		if name != string("Scarif") && name != string("Yavin") {
 			cost = readInt("cost")
 		}
+		s[name] = v
 		g = append(g, Vertex{StarSystem(name), make(Neighbourhood, 0, V), Value(cost)})
 	}
 	return g
@@ -72,14 +77,18 @@ func readEdge(g Graph, E int) {
 		if s1 == s2 {
 			log.Fatal("Loop at %s star-system not allow", s1)
 		}
-		for i := range g {
-			if g[i].name == StarSystem(s1) {
-				g[i].neighbours = append(g[i].neighbours, StarSystem(s2))
-			}
-			if g[i].name == StarSystem(s2) {
-				g[i].neighbours = append(g[i].neighbours, StarSystem(s1))
-			}
-		}
+		/*		for i := range g {
+					if g[i].name == StarSystem(s1) {
+						g[i].neighbours = append(g[i].neighbours, StarSystem(s2))
+					}
+					if g[i].name == StarSystem(s2) {
+						g[i].neighbours = append(g[i].neighbours, StarSystem(s1))
+					}
+				}
+		*/
+		g[s[s1]].neighbours = append(g[s[s1]].neighbours, StarSystem(s2))
+		g[s[s2]].neighbours = append(g[s[s2]].neighbours, StarSystem(s1))
+
 	}
 }
 func main() {

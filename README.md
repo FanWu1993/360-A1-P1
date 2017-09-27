@@ -48,4 +48,6 @@ and would be expected to generate output
   
 We have a 'Makefile' and targets  
 * 'all' to build the binary (starwar)  
-* 'tests' to run all the tests (so far, 'test0', 'test1', 'test2')  
+* 'tests' to run all the tests (so far, 'test0', 'test1', 'test2', 'test3', 'test4', 'test5')
+
+  
