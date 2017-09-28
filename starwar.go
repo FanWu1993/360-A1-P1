@@ -21,7 +21,7 @@ func readInt(s string) int {
 
 func readString(s string) string {
 	var star string
-	_, err := fmt.Fscanf(os.Stdin, "\n%s", &star)
+	_, err := fmt.Fscanf(os.Stdin, "%s", &star)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -57,6 +57,7 @@ func readVertices() Graph {
 	for v := 0; v < V; v++ {
 		cost := 0
 		name := readString("star-system")
+		fmt.Println(name)
 		if name != string("Scarif") && name != string("Yavin") {
 			cost = readInt("cost")
 		}
@@ -95,7 +96,6 @@ func main() {
 	//	dat, _ := ioutil.ReadFile("./test2.in")
 	//	fmt.Println(string(dat))
 	g := readVertices()
-	fmt.Fscanf(os.Stdin, "\n")
 	E := readInt("E")
 	readEdge(g, E)
 	fmt.Println(g)
