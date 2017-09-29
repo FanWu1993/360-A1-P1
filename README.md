@@ -1,9 +1,14 @@
-This is 360 Assignment 1
-Programming Part
-prog 1
-name: Fan Wu
-NSID: faw615
-Student NO.: 11204313
+This is 360 Assignment 1  
+Programming Part  
+prog 1  
+name: Fan Wu  
+NSID: faw615  
+Student NO.: 11204313  
+
+How to compile and run the program:  
+make  
+make test  
+make clean  
 
 Help Vader out by finding an O(V +E) algorithm which identifies the leastcost  
 articulation point which disconnects the graph when removed.  
@@ -48,6 +53,6 @@ and would be expected to generate output
   
 We have a 'Makefile' and targets  
 * 'all' to build the binary (starwar)  
-* 'tests' to run all the tests (so far, 'test0', 'test1', 'test2', 'test3', 'test4', 'test5')
+* 'tests' to run all the tests (so far, 'test0', 'test1', 'test2', 'test3', 'test4', 'test5', 'test6')
 
   
