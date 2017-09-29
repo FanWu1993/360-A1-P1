@@ -2,10 +2,57 @@ package main
 
 import (
 	//  "io/ioutil"
+	"container/list"
 	"fmt"
 	"log"
 	"os"
 )
+
+type Stack struct {
+	list *list.List
+}
+
+func NewStack() *Stack {
+	list := list.New()
+	return &Stack{list}
+}
+
+func (stack *Stack) Push(value interface{}) {
+	stack.list.PushBack(value)
+}
+
+func (stack *Stack) Pop() interface{} {
+	e := stack.list.Back()
+	if e != nil {
+		stack.list.Remove(e)
+		return e.Value
+	}
+	return nil
+}
+
+func (stack *Stack) Peak() interface{} {
+	e := stack.list.Back()
+	if e != nil {
+		return e.Value
+	}
+
+	return nil
+}
+
+func (stack *Stack) Len() int {
+	return stack.list.Len()
+}
+
+func (stack *Stack) Empty() bool {
+	return stack.list.Len() == 0
+}
+
+func (stack *Stack) PopAll() {
+	if !stack.Empty() {
+		fmt.Println(stack.Pop())
+		stack.PopAll()
+	}
+}
 
 func readInt(s string) int {
 	var i int
@@ -28,21 +75,11 @@ func readString(s string) string {
 	return star
 }
 
-type StarSystem string
-type Neighbourhood []StarSystem
-type Value int
-type Vertex struct {
-	name       StarSystem
-	neighbours Neighbourhood
-	cost       Value
-}
+type Graph [][]bool
 
-func degree(v Vertex) int {
-	return len(v.neighbours)
-}
-
-type Graph []Vertex
-type Path []StarSystem
+var visit []int
+var cost []int
+var path []string
 
 var s map[string]int
 
@@ -53,16 +90,17 @@ func readVertices() Graph {
 		fmt.Printf("No Star-system.\n")
 		os.Exit(0)
 	}
-	g := make(Graph, 0, V)
+	g := make(Graph, V, V)
+	//visit := make([]int, V, V)
 	for v := 0; v < V; v++ {
-		cost := 0
+		c := 0
 		name := readString("star-system")
-		fmt.Println(name)
 		if name != string("Scarif") && name != string("Yavin") {
-			cost = readInt("cost")
+			c = readInt("cost")
 		}
 		s[name] = v
-		g = append(g, Vertex{StarSystem(name), make(Neighbourhood, 0, V), Value(cost)})
+		cost = append(cost, c)
+		g[v] = make([]bool, V, V)
 	}
 	return g
 }
@@ -78,25 +116,16 @@ func readEdge(g Graph, E int) {
 		if s1 == s2 {
 			log.Fatal("Loop at %s star-system not allow", s1)
 		}
-		/*		for i := range g {
-					if g[i].name == StarSystem(s1) {
-						g[i].neighbours = append(g[i].neighbours, StarSystem(s2))
-					}
-					if g[i].name == StarSystem(s2) {
-						g[i].neighbours = append(g[i].neighbours, StarSystem(s1))
-					}
-				}
-		*/
-		g[s[s1]].neighbours = append(g[s[s1]].neighbours, StarSystem(s2))
-		g[s[s2]].neighbours = append(g[s[s2]].neighbours, StarSystem(s1))
-
+		g[s[s1]][s[s2]] = true
+		g[s[s2]][s[s1]] = true
 	}
 }
+
 func main() {
 	//	dat, _ := ioutil.ReadFile("./test2.in")
 	//	fmt.Println(string(dat))
 	g := readVertices()
 	E := readInt("E")
 	readEdge(g, E)
-	fmt.Println(g)
+	fmt.Println(g, E, cost)
 }
