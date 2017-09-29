@@ -2,55 +2,60 @@ package main
 
 import (
 	//  "io/ioutil"
-	"container/list"
+	"errors"
 	"fmt"
 	"log"
 	"os"
 )
 
 type Stack struct {
-	list *list.List
+	Element []interface{} //Element
 }
 
 func NewStack() *Stack {
-	list := list.New()
-	return &Stack{list}
+	return &Stack{}
 }
 
-func (stack *Stack) Push(value interface{}) {
-	stack.list.PushBack(value)
+func (stack *Stack) Push(value ...interface{}) {
+	stack.Element = append(stack.Element, value...)
 }
 
-func (stack *Stack) Pop() interface{} {
-	e := stack.list.Back()
-	if e != nil {
-		stack.list.Remove(e)
-		return e.Value
+func (stack *Stack) Top() (value interface{}) {
+	if stack.Size() > 0 {
+		return stack.Element[stack.Size()-1]
 	}
-	return nil
+	return nil //read empty stack
 }
 
-func (stack *Stack) Peak() interface{} {
-	e := stack.list.Back()
-	if e != nil {
-		return e.Value
+func (stack *Stack) Pop() (err error) {
+	if stack.Size() > 0 {
+		stack.Element = stack.Element[:stack.Size()-1]
+		return nil
 	}
-
-	return nil
+	return errors.New("Stack为空.") //read empty stack
 }
 
-func (stack *Stack) Len() int {
-	return stack.list.Len()
+func (stack *Stack) Get(idx int) (value interface{}) {
+	if idx >= 0 && stack.Size() > 0 && stack.Size() > idx {
+		return stack.Element[idx]
+	}
+	return nil //read empty stack
+}
+
+func (stack *Stack) Size() int {
+	return len(stack.Element)
 }
 
 func (stack *Stack) Empty() bool {
-	return stack.list.Len() == 0
+	if stack.Element == nil || stack.Size() == 0 {
+		return true
+	}
+	return false
 }
 
-func (stack *Stack) PopAll() {
-	if !stack.Empty() {
-		fmt.Println(stack.Pop())
-		stack.PopAll()
+func (stack *Stack) Print() {
+	for i := len(stack.Element) - 1; i >= 0; i-- {
+		fmt.Println(i, "=>", stack.Element[i])
 	}
 }
 
